@@ -1,4 +1,4 @@
-package my.edu.utar.moneyminder.ui.dashboard;
+package my.edu.utar.moneyminder.ui.VirtualAdvisor;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,24 +11,23 @@ import android.support.v4.app.Fragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 
-import my.edu.utar.moneyminder.R;
-import my.edu.utar.moneyminder.databinding.FragmentDashboardBinding;
+import my.edu.utar.moneyminder.databinding.FragmentVirtualAdvisorBinding;
 
-public class DashboardFragment extends Fragment {
+public class VirtualAdvisorFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
-    private FragmentDashboardBinding binding;
+    private VirtualAdvisorViewModel virtualAdvisorViewModel;
+    private FragmentVirtualAdvisorBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(DashboardViewModel.class);
+        virtualAdvisorViewModel =
+                new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(VirtualAdvisorViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentVirtualAdvisorBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textVirtualAdvisor;
+        virtualAdvisorViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

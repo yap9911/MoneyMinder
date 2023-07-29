@@ -1,14 +1,15 @@
-package my.edu.utar.moneyminder.ui.dashboard;
+package my.edu.utar.moneyminder.ui.transaction;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.widget.Button;
 
-public class DashboardViewModel extends ViewModel {
+public class TransactionViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public TransactionViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is dashboard fragment");
     }

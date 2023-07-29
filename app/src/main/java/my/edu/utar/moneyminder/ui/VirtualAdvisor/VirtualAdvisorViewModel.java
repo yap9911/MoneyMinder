@@ -1,14 +1,14 @@
-package my.edu.utar.moneyminder.ui.notifications;
+package my.edu.utar.moneyminder.ui.VirtualAdvisor;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class VirtualAdvisorViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public VirtualAdvisorViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is notifications fragment");
     }

@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="my.edu.utar.moneyminder.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="my.edu.utar.moneyminder.ui.transaction.TransactionFragment"
+        android:label="@string/title_transaction"
+        tools:layout="@layout/fragment_transaction" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="my.edu.utar.moneyminder.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="my.edu.utar.moneyminder.ui.VirtualAdvisor.VirtualAdvisorFragment"
+        android:label="@string/title_virtual_advisor"
+        tools:layout="@layout/fragment_virtual_advisor" />
 </navigation>

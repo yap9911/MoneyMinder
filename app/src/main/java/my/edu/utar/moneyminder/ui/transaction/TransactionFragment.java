@@ -1,4 +1,4 @@
-package my.edu.utar.moneyminder.ui.notifications;
+package my.edu.utar.moneyminder.ui.transaction;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,24 +11,24 @@ import android.support.v4.app.Fragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 
-import my.edu.utar.moneyminder.R;
-import my.edu.utar.moneyminder.databinding.FragmentNotificationsBinding;
+import my.edu.utar.moneyminder.databinding.FragmentTransactionBinding;
+import my.edu.utar.moneyminder.databinding.FragmentTransactionBinding;
 
-public class NotificationsFragment extends Fragment {
+public class TransactionFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
-    private FragmentNotificationsBinding binding;
+    private TransactionViewModel transactionViewModel;
+    private FragmentTransactionBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(NotificationsViewModel.class);
+        transactionViewModel =
+                new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(TransactionViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentTransactionBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textTransaction;
+        transactionViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
