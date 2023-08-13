@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_transaction"
         android:icon="@drawable/ic_baseline_account_balance_wallet_24"
         android:title="@string/title_transaction" />
 
@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home" />
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_VritualAdvisor"
         android:icon="@drawable/ic_hubot_svgrepo_com"
         android:title="@string/title_virtual_advisor" />
 
