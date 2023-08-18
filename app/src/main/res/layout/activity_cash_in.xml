@@ -7,7 +7,7 @@
     tools:context=".CashInActivity">
 
     <TextView
-        android:id="@+id/cashIntv"
+        android:id="@+id/CashIntv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cash in"
@@ -17,33 +17,34 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.096" />
+        app:layout_constraintVertical_bias="0.023" />
 
     <TextView
-        android:id="@+id/balancetv"
+        android:id="@+id/CashInBalancetv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/cashIntv"
-        app:layout_constraintStart_toStartOf="@+id/cashIntv"
-        app:layout_constraintTop_toBottomOf="@+id/cashIntv"
-        app:layout_constraintVertical_bias="0.069" />
+        app:layout_constraintEnd_toEndOf="@+id/CashIntv"
+        app:layout_constraintStart_toStartOf="@+id/CashIntv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.153" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="268dp"
         android:layout_height="90dp"
-        android:layout_marginBottom="292dp"
         android:background="@drawable/border_rectangle"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/balancetv"
-        app:layout_constraintHorizontal_bias="0.451"
-        app:layout_constraintStart_toStartOf="@+id/balancetv">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.393">
 
         <TextView
-            android:id="@+id/amounttv"
+            android:id="@+id/CashInAmounttv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
@@ -51,7 +52,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/amountet"
+            android:id="@+id/CashInAmountet"
             android:layout_width="141dp"
             android:layout_height="48dp"
             android:layout_gravity="end|center_vertical"
@@ -64,10 +65,10 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/CashInAddButton"
         android:layout_width="218dp"
         android:layout_height="71dp"
-        android:layout_marginBottom="108dp"
+        android:layout_marginBottom="168dp"
         android:text="Add"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"

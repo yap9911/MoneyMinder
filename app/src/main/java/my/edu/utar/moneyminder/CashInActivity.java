@@ -1,6 +1,5 @@
 package my.edu.utar.moneyminder;
 
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -21,22 +20,22 @@ public class CashInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cash_in);
 
-        TextView balancetv = new TextView(this);
-        balancetv = findViewById(R.id.balancetv);
-        balancetv.setText("Total balance: ");
+        TextView cashInBalancetv;
+        cashInBalancetv = findViewById(R.id.CashInBalancetv);
+        cashInBalancetv.setText("Total balance: ");
 
-        EditText amountet = findViewById(R.id.amountet);
-        amountet.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
+        EditText CashInAmountet = findViewById(R.id.CashInAmountet);
+        CashInAmountet.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
 
-        Button addButton = findViewById(R.id.addButton);
+        Button CashInAddButton = findViewById(R.id.CashInAddButton);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        CashInAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 boolean validAmount = false;
 
-                String amountStr = amountet.getText().toString();          // obtain the amount and convert to string
+                String amountStr = CashInAmountet.getText().toString();          // obtain the amount and convert to string
                 double amount;
 
                 try {
