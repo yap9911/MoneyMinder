@@ -15,17 +15,20 @@ import android.widget.Toast;
 
 public class CashInActivity extends AppCompatActivity {
 
+    private TextView cashInBalanceTextView;
+    private EditText CashInAmountEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cash_in);
 
-        TextView cashInBalancetv;
-        cashInBalancetv = findViewById(R.id.CashInBalancetv);
-        cashInBalancetv.setText("Total balance: ");
 
-        EditText CashInAmountet = findViewById(R.id.CashInAmountet);
-        CashInAmountet.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
+        cashInBalanceTextView = findViewById(R.id.CashInBalancetv);
+        cashInBalanceTextView.setText("Total balance: ");
+
+        CashInAmountEditText = findViewById(R.id.CashInAmountet);
+        CashInAmountEditText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
 
         Button CashInAddButton = findViewById(R.id.CashInAddButton);
 
@@ -35,7 +38,7 @@ public class CashInActivity extends AppCompatActivity {
 
                 boolean validAmount = false;
 
-                String amountStr = CashInAmountet.getText().toString();          // obtain the amount and convert to string
+                String amountStr = CashInAmountEditText.getText().toString();          // obtain the amount and convert to string
                 double amount;
 
                 try {

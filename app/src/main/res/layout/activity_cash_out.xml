@@ -32,8 +32,8 @@
 
     <FrameLayout
         android:id="@+id/frameLayout1"
-        android:layout_width="269dp"
-        android:layout_height="64dp"
+        android:layout_width="319dp"
+        android:layout_height="69dp"
         android:background="@drawable/border_rectangle"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
-            android:text="Amount: "
+            android:text="Amount: RM "
             android:textSize="24sp" />
 
         <EditText
@@ -56,7 +56,7 @@
             android:layout_height="48dp"
             android:layout_gravity="end|center_vertical"
             android:ems="10"
-            android:hint="e.g 3286.80"
+            android:text="0"
             android:inputType="numberDecimal"
             android:textSize="24sp" />
 
@@ -65,8 +65,8 @@
 
     <FrameLayout
         android:id="@+id/frameLayout2"
-        android:layout_width="269dp"
-        android:layout_height="64dp"
+        android:layout_width="319dp"
+        android:layout_height="69dp"
         android:background="@drawable/border_rectangle"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,38 +81,59 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
+            android:gravity="end"
             android:text="Category: "
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/CashOutCategoryet"
+            android:layout_width="141dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end|center_vertical"
+            android:ems="10"
+            android:inputType="numberDecimal"
             android:textSize="24sp" />
 
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/frameLayout3"
-        android:layout_width="269dp"
-        android:layout_height="64dp"
+        android:layout_width="319dp"
+        android:layout_height="69dp"
         android:background="@drawable/border_rectangle"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/frameLayout2"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/frameLayout2"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
-        app:layout_constraintVertical_bias="0.04">
+        app:layout_constraintVertical_bias="0.039">
 
         <TextView
             android:id="@+id/CashOutDatetv"
-            android:layout_width="wrap_content"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
             android:text="Date: "
             android:textSize="24sp" />
 
+        <EditText
+            android:id="@+id/CashOutDateet"
+            android:layout_width="141dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end|center_vertical"
+            android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="date"
+            android:textSize="22sp" />
+
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/frameLayout4"
-        android:layout_width="268dp"
-        android:layout_height="64dp"
+        android:layout_width="319dp"
+        android:layout_height="69dp"
         android:background="@drawable/border_rectangle"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -130,6 +151,16 @@
             android:text="Note: "
             android:textSize="24sp" />
 
+        <EditText
+            android:id="@+id/CashOutNoteet"
+            android:layout_width="141dp"
+            android:layout_height="48dp"
+            android:hint="Write note"
+            android:layout_gravity="end|center_vertical"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:textSize="22sp" />
+
     </FrameLayout>
 
     <Button
@@ -144,6 +175,8 @@
         app:layout_constraintStart_toStartOf="@+id/frameLayout4"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout4"
         app:layout_constraintVertical_bias="0.466" />
+
+
 
 
 </android.support.constraint.ConstraintLayout>
