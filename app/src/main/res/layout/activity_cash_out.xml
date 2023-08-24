@@ -85,13 +85,12 @@
             android:text="Category: "
             android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/CashOutCategoryet"
+        <Spinner
+            android:id="@+id/CashOutCategorySpinner"
             android:layout_width="141dp"
             android:layout_height="48dp"
             android:layout_gravity="end|center_vertical"
             android:ems="10"
-            android:inputType="numberDecimal"
             android:textSize="24sp" />
 
     </FrameLayout>
@@ -175,8 +174,6 @@
         app:layout_constraintStart_toStartOf="@+id/frameLayout4"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout4"
         app:layout_constraintVertical_bias="0.466" />
-
-
 
 
 </android.support.constraint.ConstraintLayout>

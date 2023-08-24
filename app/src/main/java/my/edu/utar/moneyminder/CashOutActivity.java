@@ -8,9 +8,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,10 +32,28 @@ public class CashOutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cash_out);
 
         CashOutBalanceTextView = findViewById(R.id.CashOutBalancetv);
+        // Display the current balance of the user
         CashOutBalanceTextView.setText("Total balance: ");
 
         CashOutAmountEditText = findViewById(R.id.CashOutAmountet);
+        // Set the maximum decimal place for the edit text to 2
         CashOutAmountEditText.setFilters(new InputFilter[]{new CashInActivity.DecimalDigitsInputFilter(2)});
+
+        Spinner cashOutCategorySpinner = findViewById(R.id.CashOutCategorySpinner);
+
+        // Define an array of category options
+        String[] categoryOptions = {"Food & Beverage", "Transportation", "Rentals", "Bills", "Medicals",
+        "Fun & Relax"};
+
+        // Create an ArrayAdapter for the Spinner
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, categoryOptions);
+
+        // Specify the layout resource for the dropdown options
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Set the adapter for the Spinner
+        cashOutCategorySpinner.setAdapter(spinnerAdapter);
 
         // Find the EditText for the date
         cashOutDateEditText = findViewById(R.id.CashOutDateet);

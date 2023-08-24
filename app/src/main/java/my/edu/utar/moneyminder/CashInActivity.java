@@ -25,9 +25,11 @@ public class CashInActivity extends AppCompatActivity {
 
 
         cashInBalanceTextView = findViewById(R.id.CashInBalancetv);
+        // Display the current balance of the user
         cashInBalanceTextView.setText("Total balance: ");
 
         CashInAmountEditText = findViewById(R.id.CashInAmountet);
+        // Set the maximum decimal place for the edit text to 2
         CashInAmountEditText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
 
         Button CashInAddButton = findViewById(R.id.CashInAddButton);
