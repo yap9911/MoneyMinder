@@ -3,4 +3,6 @@
     <string name="title_home">Home</string>
     <string name="title_transaction">Transaction</string>
     <string name="title_virtual_advisor">Virtual Advisor</string>
+    <string name="title_cash_in_activity">Cash In</string>
+    <string name="title_cash_out_activity">Cash Out</string>
 </resources>

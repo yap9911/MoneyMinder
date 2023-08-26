@@ -11,9 +11,11 @@
         android:theme="@style/Theme.MoneyMinder">
         <activity
             android:name=".CashOutActivity"
+            android:label="@string/title_cash_out_activity"
             android:exported="false" />
         <activity
             android:name=".CashInActivity"
+            android:label="@string/title_cash_in_activity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -4,6 +4,176 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CashOutActivity">
+    tools:context=".CashInActivity">
+
+    <TextView
+        android:id="@+id/cashOuttv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cash out"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <TextView
+        android:id="@+id/CashOutBalancetv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cashOuttv"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/cashOuttv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.135" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout1"
+        android:layout_width="319dp"
+        android:layout_height="69dp"
+        android:background="@drawable/border_rectangle"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.274">
+
+        <TextView
+            android:id="@+id/CashOutAmounttv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:text="Amount: RM "
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/CashOutAmountet"
+            android:layout_width="141dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end|center_vertical"
+            android:ems="10"
+            android:text="0"
+            android:inputType="numberDecimal"
+            android:textSize="24sp" />
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="319dp"
+        android:layout_height="69dp"
+        android:background="@drawable/border_rectangle"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout1"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout1"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout1"
+        app:layout_constraintVertical_bias="0.039">
+
+        <TextView
+            android:id="@+id/CashOutCategorytv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:gravity="end"
+            android:text="Category: "
+            android:textSize="24sp" />
+
+        <Spinner
+            android:id="@+id/CashOutCategorySpinner"
+            android:layout_width="141dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end|center_vertical"
+            android:ems="10"
+            android:textSize="24sp" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout3"
+        android:layout_width="319dp"
+        android:layout_height="69dp"
+        android:background="@drawable/border_rectangle"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
+        app:layout_constraintVertical_bias="0.039">
+
+        <TextView
+            android:id="@+id/CashOutDatetv"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:text="Date: "
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/CashOutDateet"
+            android:layout_width="141dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end|center_vertical"
+            android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="date"
+            android:textSize="22sp" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout4"
+        android:layout_width="319dp"
+        android:layout_height="69dp"
+        android:background="@drawable/border_rectangle"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout3"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout3"
+        app:layout_constraintVertical_bias="0.087">
+
+        <TextView
+            android:id="@+id/CashOutNotetv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:text="Note: "
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/CashOutNoteet"
+            android:layout_width="141dp"
+            android:layout_height="48dp"
+            android:hint="Write note"
+            android:layout_gravity="end|center_vertical"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:textSize="22sp" />
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/CashOutAddButton"
+        android:layout_width="218dp"
+        android:layout_height="71dp"
+        android:text="Add"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout4"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout4"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout4"
+        app:layout_constraintVertical_bias="0.466" />
+
 
 </android.support.constraint.ConstraintLayout>

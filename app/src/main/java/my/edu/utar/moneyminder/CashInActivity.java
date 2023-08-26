@@ -1,6 +1,5 @@
 package my.edu.utar.moneyminder;
 
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -16,27 +15,32 @@ import android.widget.Toast;
 
 public class CashInActivity extends AppCompatActivity {
 
+    private TextView cashInBalanceTextView;
+    private EditText CashInAmountEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cash_in);
 
-        TextView balancetv = new TextView(this);
-        balancetv = findViewById(R.id.balancetv);
-        balancetv.setText("Total balance: ");
 
-        EditText amountet = findViewById(R.id.amountet);
-        amountet.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
+        cashInBalanceTextView = findViewById(R.id.CashInBalancetv);
+        // Display the current balance of the user
+        cashInBalanceTextView.setText("Total balance: ");
 
-        Button addButton = findViewById(R.id.addButton);
+        CashInAmountEditText = findViewById(R.id.CashInAmountet);
+        // Set the maximum decimal place for the edit text to 2
+        CashInAmountEditText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        Button CashInAddButton = findViewById(R.id.CashInAddButton);
+
+        CashInAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 boolean validAmount = false;
 
-                String amountStr = amountet.getText().toString();          // obtain the amount and convert to string
+                String amountStr = CashInAmountEditText.getText().toString();          // obtain the amount and convert to string
                 double amount;
 
                 try {
