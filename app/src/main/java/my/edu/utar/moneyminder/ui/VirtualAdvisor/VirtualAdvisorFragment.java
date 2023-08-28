@@ -20,8 +20,8 @@ public class VirtualAdvisorFragment extends Fragment {
         binding = FragmentVirtualAdvisorBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textVirtualAdvisor;
-        textView.setText("This is VirtualAdvisor fragment");
+        //final TextView textView = binding.textVirtualAdvisor;
+        //textView.setText("This is VirtualAdvisor fragment");
         return root;
     }
 
