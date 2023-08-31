@@ -3,6 +3,8 @@ package my.edu.utar.moneyminder;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -20,6 +22,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.Timestamp;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -28,6 +31,8 @@ import java.util.Map;
 
 
 public class CashInActivity extends AppCompatActivity {
+
+    private EditText CashInAmountEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +44,7 @@ public class CashInActivity extends AppCompatActivity {
         // Display the current balance of the user
         cashInBalanceTextView.setText("Total balance: ");
 
-        EditText CashInAmountEditText = findViewById(R.id.CashInAmountet);
+        CashInAmountEditText = findViewById(R.id.CashInAmountet);
         // Set the maximum decimal place for the edit text to 2
         CashInAmountEditText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
 
@@ -69,36 +74,35 @@ public class CashInActivity extends AppCompatActivity {
                     validAmount = true;
                     Toast.makeText(CashInActivity.this, "Woohoo~ Money in the bank!",
                             Toast.LENGTH_SHORT).show();
+                    // Access a Cloud Firestore instance from your Activity
+
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                    // Create a new user with a first and last name
+                    Map<String, Object> CashInTrans = new HashMap<>();
+                    CashInTrans.put("Amount", CashInAmountEditText.getText().toString());
+                    CashInTrans.put("Category", "Cash in");
+                    CashInTrans.put("Date", Timestamp.now());
+
+                    // Add a new document with a generated ID
+                    db.collection("Transactions")
+                            .add(CashInTrans)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error adding document", e);
+                                }
+                            });
+                    openMainActivity();
                 }
             }
         });
-
-        // Access a Cloud Firestore instance from your Activity
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("first", "Ada");
-        user.put("last", "Lovelace");
-        user.put("born", 1815);
-
-        // Add a new document with a generated ID
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
-
 
     }
 
@@ -117,6 +121,11 @@ public class CashInActivity extends AppCompatActivity {
         }
         // Handle other menu item clicks if needed
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 
