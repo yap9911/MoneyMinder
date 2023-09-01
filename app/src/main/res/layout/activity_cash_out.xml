@@ -91,7 +91,7 @@
             android:layout_height="48dp"
             android:layout_gravity="end|center_vertical"
             android:ems="10"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
     </FrameLayout>
 
@@ -122,6 +122,7 @@
             android:layout_height="48dp"
             android:layout_gravity="end|center_vertical"
             android:ems="10"
+            android:text="Today"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:inputType="date"

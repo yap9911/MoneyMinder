@@ -67,18 +67,23 @@ public class CashInActivity extends AppCompatActivity {
                     return; // Exit the onClick method if parsing fails
                 }
 
-                if (amount <= 0) {
-                    Toast.makeText(CashInActivity.this, "Why are you trying to add zero money?",
+                if (amount <= 0) {  // input 0 in amount is not allowed
+                    Toast.makeText(CashInActivity.this, "Why are you trying to add zero amount of money?",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    validAmount = true;
+                    validAmount = true;     // amount is a valid input
+                }
+
+                if (validAmount){
+
                     Toast.makeText(CashInActivity.this, "Woohoo~ Money in the bank!",
                             Toast.LENGTH_SHORT).show();
+
                     // Access a Cloud Firestore instance from your Activity
 
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                    // Create a new user with a first and last name
+                    // Create a new transaction with a amount, category, date
                     Map<String, Object> CashInTrans = new HashMap<>();
                     CashInTrans.put("Amount", CashInAmountEditText.getText().toString());
                     CashInTrans.put("Category", "Cash in");
@@ -101,6 +106,7 @@ public class CashInActivity extends AppCompatActivity {
                             });
                     openMainActivity();
                 }
+
             }
         });
 
@@ -123,6 +129,7 @@ public class CashInActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Method to return to Main Activity
     public void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
