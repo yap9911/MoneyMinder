@@ -57,8 +57,8 @@ public class CashOutActivity extends AppCompatActivity {
         EditText cashOutNoteEditText = findViewById(R.id.CashOutNoteet);
 
         // Define an array of category options
-        String[] categoryOptions = {"Food & Beverage", "Transportation", "Rentals", "Bills", "Medicals",
-        "Fun & Relax"};
+        String[] categoryOptions = {"Food & Beverage", "Transportation",
+                "Rentals", "Bills", "Medicals", "Fun & Relax"};
 
         // Create an ArrayAdapter for the Spinner
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
