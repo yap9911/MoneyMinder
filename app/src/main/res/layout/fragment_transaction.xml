@@ -32,6 +32,7 @@
             android:layout_gravity="end|center_vertical"
             android:layout_marginBottom="10dp"
             android:src="@drawable/ic_baseline_filter_alt_24"
+            android:contentDescription="filter button"
             app:layout_constraintBottom_toTopOf="@+id/frameLayout1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.954"
