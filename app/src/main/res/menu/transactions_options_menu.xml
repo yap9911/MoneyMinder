@@ -11,7 +11,7 @@
         <menu>
             <item
                 android:id="@+id/DayOption"
-                android:title="Day" />
+                android:title="Today" />
             <item
                 android:id="@+id/WeekOption"
                 android:title="Week" />
@@ -20,7 +20,7 @@
                 android:title="Month" />
             <item
                 android:id="@+id/CustomOption"
-                android:title="Custome time range" />
+                android:title="Custom time range" />
         </menu>
     </item>
     <item
@@ -29,8 +29,11 @@
 
         <menu>
             <item
+                android:id="@+id/AllOption"
+                android:title="All" />
+            <item
                 android:id="@+id/FNBOption"
-                android:title="Food and Beverage" />
+                android:title="Food &amp; Beverage" />
             <item
                 android:id="@+id/TransportOption"
                 android:title="Transportation" />
@@ -45,7 +48,10 @@
                 android:title="Medicals" />
             <item
                 android:id="@+id/FunNRelaxOption"
-                android:title="Fun and Relax" />
+                android:title="Fun &amp; Relax" />
+            <item
+                android:id="@+id/CashInOption"
+                android:title="Cash in" />
         </menu>
 
     </item>

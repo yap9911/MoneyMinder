@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.Timestamp;
 
@@ -32,7 +33,7 @@ import java.util.Map;
 
 public class CashInActivity extends AppCompatActivity {
 
-    private EditText CashInAmountEditText;
+    private EditText cashInAmountEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +45,11 @@ public class CashInActivity extends AppCompatActivity {
         // Display the current balance of the user
         cashInBalanceTextView.setText("Total balance: ");
 
-        CashInAmountEditText = findViewById(R.id.CashInAmountet);
+        cashInAmountEditText = findViewById(R.id.CashInAmountet);
         // Set the maximum decimal place for the edit text to 2
-        CashInAmountEditText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
+        cashInAmountEditText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
+
+        EditText cashInNoteEditText = findViewById(R.id.CashInNoteet);
 
         Button CashInAddButton = findViewById(R.id.CashInAddButton);
 
@@ -56,7 +59,7 @@ public class CashInActivity extends AppCompatActivity {
 
                 boolean validAmount = false;
 
-                String amountStr = CashInAmountEditText.getText().toString();          // obtain the amount and convert to string
+                String amountStr = cashInAmountEditText.getText().toString();          // obtain the amount and convert to string
                 double amount;
 
                 try {
@@ -76,18 +79,16 @@ public class CashInActivity extends AppCompatActivity {
 
                 if (validAmount){
 
-                    Toast.makeText(CashInActivity.this, "Woohoo~ Money in the bank!",
-                            Toast.LENGTH_SHORT).show();
-
                     // Access a Cloud Firestore instance from your Activity
 
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                     // Create a new transaction with a amount, category, date
                     Map<String, Object> CashInTrans = new HashMap<>();
-                    CashInTrans.put("Amount", CashInAmountEditText.getText().toString());
+                    CashInTrans.put("Amount", cashInAmountEditText.getText().toString());
                     CashInTrans.put("Category", "Cash in");
                     CashInTrans.put("Date", Timestamp.now());
+                    CashInTrans.put("Note", cashInNoteEditText.getText().toString());
 
                     // Add a new document with a generated ID
                     db.collection("Transactions")
@@ -96,6 +97,8 @@ public class CashInActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                     Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                    // Add the amount to the balance
+                                    increaseBalance(db, amount);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -127,6 +130,28 @@ public class CashInActivity extends AppCompatActivity {
         }
         // Handle other menu item clicks if needed
         return super.onOptionsItemSelected(item);
+    }
+
+    // Function to update the balance in Firestore
+    private void increaseBalance(FirebaseFirestore db, double amount) {
+        // Get the current balance document
+        DocumentReference balanceRef = db.collection("Balance").document("JtzWpeI9bBUdOwOO4oWP");
+
+        // Update the balance by adding the transaction amount
+        balanceRef.update("amount", FieldValue.increment(amount))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Balance updated successfully.");
+                        openMainActivity();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating balance", e);
+                    }
+                });
     }
 
     // Method to return to Main Activity

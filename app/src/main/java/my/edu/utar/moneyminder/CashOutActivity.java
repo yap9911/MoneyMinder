@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -112,9 +113,6 @@ public class CashOutActivity extends AppCompatActivity {
 
                 if (validAmount){
 
-                    Toast.makeText(CashOutActivity.this, "Budgeting is important, but so is enjoying life.",
-                            Toast.LENGTH_SHORT).show();
-
                     // Access a Cloud Firestore instance from your Activity
 
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -133,6 +131,7 @@ public class CashOutActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                     Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                    reduceBalance(db, amount);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -220,5 +219,27 @@ public class CashOutActivity extends AppCompatActivity {
 
         // Show the date picker dialog
         datePickerDialog.show();
+    }
+
+    // Function to update the balance in Firestore
+    private void reduceBalance(FirebaseFirestore db, double amount) {
+        // Get the current balance document
+        DocumentReference balanceRef = db.collection("Balance").document("JtzWpeI9bBUdOwOO4oWP");
+
+        // Update the balance by adding the transaction amount
+        balanceRef.update("amount", FieldValue.increment(-amount))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Balance updated successfully.");
+                        openMainActivity();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating balance", e);
+                    }
+                });
     }
 }
