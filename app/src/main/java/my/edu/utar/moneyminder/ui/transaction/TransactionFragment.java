@@ -3,6 +3,7 @@ package my.edu.utar.moneyminder.ui.transaction;
 import static android.content.ContentValues.TAG;
 
 import android.app.DatePickerDialog;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -46,6 +46,7 @@ public class TransactionFragment extends Fragment {
     private TextView categorySelected;
     private Calendar startDateCalendar;
     private Calendar endDateCalendar;
+    private View root;
 
     private String dateString = "Date: Today";          // date String that is used to filter the transactions based on date
                                                         // set to "Today" by default
@@ -59,11 +60,15 @@ public class TransactionFragment extends Fragment {
     private Date endDate = calendar.getTime();          // to filter the transactions based on date
                                                         // both are set to today as default
 
+    // Store the data in a list
+    public static List<Transaction> transactionArrayList = new ArrayList<>();
+    public static CardAdapter cardAdapter;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentTransactionBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
 
         DateSelected = binding.timeRange;
         categorySelected = binding.Category;
@@ -247,7 +252,6 @@ public class TransactionFragment extends Fragment {
                 popupMenu.show();
             }
         });
-        dateAndCategoryFilter(dateString, categoryString, root );
         return root;
     }
 
@@ -458,9 +462,6 @@ public class TransactionFragment extends Fragment {
 
         }
 
-        // Store the data in a list
-        List<Transaction> transactionArrayList = new ArrayList<>();
-
         // Clear the arrayList initially
         transactionArrayList.clear();
 
@@ -495,7 +496,7 @@ public class TransactionFragment extends Fragment {
                     }
 
                     // Create an instance of the CardAdapter once, after retrieving all data
-                    CardAdapter cardAdapter = new CardAdapter(transactionArrayList, getActivity(), root);
+                    cardAdapter = new CardAdapter(transactionArrayList, getActivity());
 
                     // Find your RecyclerView by its ID
                     RecyclerView recyclerView = root.findViewById(R.id.transactionsRecyclerView);
@@ -514,6 +515,15 @@ public class TransactionFragment extends Fragment {
                     }
                 });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Call the method you want to run when the fragment is visible
+        dateAndCategoryFilter(dateString, categoryString, root);
+    }
+
 
     @Override
     public void onDestroyView() {

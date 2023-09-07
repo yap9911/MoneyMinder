@@ -32,9 +32,13 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import my.edu.utar.moneyminder.ui.transaction.Transaction;
+import my.edu.utar.moneyminder.ui.transaction.TransactionFragment;
 
 public class EditCashOutActivity extends AppCompatActivity {
 
@@ -59,7 +63,7 @@ public class EditCashOutActivity extends AppCompatActivity {
             String category = intent.getStringExtra("category");
             String date = intent.getStringExtra("date");
             String note = intent.getStringExtra("note");
-
+            int position = intent.getIntExtra("position", -1);
 
             EditText cashOutEditAmountEditText = findViewById(R.id.editCashOutAmountet);
             cashOutEditAmountEditText.setFilters(new InputFilter[]{new CashInActivity.DecimalDigitsInputFilter(2)});
@@ -150,12 +154,21 @@ public class EditCashOutActivity extends AppCompatActivity {
                         updates.put("Date", selectedDate);
                         updates.put("Note", cashOutEditNoteEditText.getText().toString());
 
+                        Transaction transaction = new Transaction( documentId,
+                                cashOutEditAmountEditText.getText().toString(),
+                                cashOutEditCategorySpinner.getSelectedItem().toString(),
+                                selectedDate,
+                                cashOutEditNoteEditText.getText().toString()
+                        );
+
                         // Update the document with the new field value
                         docRef.update(updates)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         // Document successfully updated
+                                        Log.d(TAG, "Transaction updated successfully.");
+
                                         updateBalance(db, originalAmount, updatedAmount);
                                     }
                                 })

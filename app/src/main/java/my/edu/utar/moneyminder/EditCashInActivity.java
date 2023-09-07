@@ -34,6 +34,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import my.edu.utar.moneyminder.ui.transaction.Transaction;
+import my.edu.utar.moneyminder.ui.transaction.TransactionFragment;
+
 public class EditCashInActivity extends AppCompatActivity {
 
     private EditText cashInEditDateEditText;
@@ -46,7 +49,7 @@ public class EditCashInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_cash_out);
+        setContentView(R.layout.activity_edit_cash_in);
 
         // Retrieve the extra data (id, amount, category, date and note)
         Intent intent = getIntent();
@@ -56,6 +59,7 @@ public class EditCashInActivity extends AppCompatActivity {
             Double originalAmount = Double.parseDouble(amount);
             String date = intent.getStringExtra("date");
             String note = intent.getStringExtra("note");
+            int position = intent.getIntExtra("position", -1);
 
 
             EditText cashInEditAmountEditText = findViewById(R.id.editCashInAmountet);
@@ -117,12 +121,21 @@ public class EditCashInActivity extends AppCompatActivity {
                         updates.put("Date", selectedDate);
                         updates.put("Note", cashInEditNoteEditText.getText().toString());
 
+                        Transaction transaction = new Transaction( documentId,
+                                cashInEditAmountEditText.getText().toString(),
+                                "Cash in",
+                                selectedDate,
+                                cashInEditNoteEditText.getText().toString()
+                        );
+
                         // Update the document with the new field value
                         docRef.update(updates)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         // Document successfully updated
+                                        Log.d(TAG, "Transaction updated successfully.");
+
                                         // Update the balance
                                         updateBalance(db, originalAmount, updatedAmount);
                                     }
@@ -228,6 +241,7 @@ public class EditCashInActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "Balance updated successfully.");
+
                         finish();
                     }
                 })
