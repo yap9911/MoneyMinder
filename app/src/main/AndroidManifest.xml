@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="my.edu.utar.moneyminder">
+    package="my.edu.utar.moneyminder" >
 
     <application
         android:allowBackup="true"
@@ -8,19 +8,27 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MoneyMinder">
+        android:theme="@style/Theme.MoneyMinder" >
+        <activity
+            android:name=".EditCashInActivity"
+            android:exported="false"
+            android:label="Edit Cash In Transaction" />
+        <activity
+            android:name=".EditCashOutActivity"
+            android:exported="false"
+            android:label="Edit Cash Out Transaction" />
         <activity
             android:name=".CashOutActivity"
-            android:label="@string/title_cash_out_activity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_cash_out_activity" />
         <activity
             android:name=".CashInActivity"
-            android:label="@string/title_cash_in_activity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_cash_in_activity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

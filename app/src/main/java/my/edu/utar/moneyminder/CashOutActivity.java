@@ -41,14 +41,16 @@ public class CashOutActivity extends AppCompatActivity {
 
     private EditText cashOutDateEditText;
 
+    // Get the current date
+    private Calendar calendar = Calendar.getInstance();
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    // To store the date selected by user using date picker (set the value to today by default)
+    private String selectedDate = dateFormat.format(calendar.getTime());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cash_out);
-
-        TextView CashOutBalanceTextView = findViewById(R.id.CashOutBalancetv);
-        // Display the current balance of the user
-        CashOutBalanceTextView.setText("Total balance: ");
 
         EditText CashOutAmountEditText = findViewById(R.id.CashOutAmountet);
         // Set the maximum decimal place for the edit text to 2
@@ -121,8 +123,9 @@ public class CashOutActivity extends AppCompatActivity {
                     Map<String, Object> CashOutTrans = new HashMap<>();
                     CashOutTrans.put("Amount", CashOutAmountEditText.getText().toString());
                     CashOutTrans.put("Category", cashOutCategorySpinner.getSelectedItem().toString());
-                    CashOutTrans.put("Date", Timestamp.now());
+                    CashOutTrans.put("Date", selectedDate);
                     CashOutTrans.put("Note", cashOutNoteEditText.getText().toString());
+                    CashOutTrans.put("Last Updated Time", Timestamp.now());
 
                     // Add a new document with a generated ID
                     db.collection("Transactions")
@@ -169,7 +172,7 @@ public class CashOutActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // Method to show the date picker dialog
+    // Method to show the date picker dialog and return the selected date as a String
     private void showDatePicker() {
         Calendar calendar = Calendar.getInstance();
 
@@ -191,6 +194,7 @@ public class CashOutActivity extends AppCompatActivity {
                                 selectedCalendar.get(Calendar.MONTH) == currentDateCalendar.get(Calendar.MONTH) &&
                                 selectedCalendar.get(Calendar.DAY_OF_MONTH) == currentDateCalendar.get(Calendar.DAY_OF_MONTH)) {
                             // Selected date is today
+                            selectedDate = dateFormat.format(selectedCalendar.getTime());
                             cashOutDateEditText.setText("Today");
                         } else {
                             // Calculate the difference in days
@@ -198,18 +202,21 @@ public class CashOutActivity extends AppCompatActivity {
                             long diffDays = TimeUnit.MILLISECONDS.toDays(diffInMillis);
 
                             if (diffDays == 1) {
-                                // Selected date is tomorrow
+                                // Selected date is tomorrow;
+                                selectedDate = dateFormat.format(selectedCalendar.getTime());
                                 cashOutDateEditText.setText("Tomorrow");
                             } else if (diffDays == -1) {
                                 // Selected date is yesterday
+                                selectedDate = dateFormat.format(selectedCalendar.getTime());
                                 cashOutDateEditText.setText("Yesterday");
                             } else {
                                 // Not today, tomorrow, or yesterday, display the selected date
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                                String selectedDate = dateFormat.format(selectedCalendar.getTime());
+                                selectedDate = dateFormat.format(selectedCalendar.getTime());
                                 cashOutDateEditText.setText(selectedDate);
                             }
                         }
+
+
                     }
                 },
                 calendar.get(Calendar.YEAR),
@@ -219,12 +226,13 @@ public class CashOutActivity extends AppCompatActivity {
 
         // Show the date picker dialog
         datePickerDialog.show();
+
     }
 
     // Function to update the balance in Firestore
     private void reduceBalance(FirebaseFirestore db, double amount) {
         // Get the current balance document
-        DocumentReference balanceRef = db.collection("Balance").document("JtzWpeI9bBUdOwOO4oWP");
+        DocumentReference balanceRef = db.collection("Balance").document("f8dT4dq1c74zpSwITBJR");
 
         // Update the balance by adding the transaction amount
         balanceRef.update("amount", FieldValue.increment(-amount))

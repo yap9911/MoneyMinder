@@ -341,113 +341,10 @@ public class TransactionFragment extends Fragment {
         }
     }
 
-    private void fireStoreAccess(String categoryString, Date startDate, Date endDate, View root) {
-
-        // Access a Cloud Firestore instance from your Activity
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // Create a reference to the "Transactions" collection
-        CollectionReference transactionsRef = db.collection("Transactions");
-
-        Query query = transactionsRef;
-
-        // If the category is not "All", add a filter to the query to filter by category
-        if (!categoryString.equals("All")) {
-            query = query.whereEqualTo("Category", categoryString);
-        }
-
-        // If both startDate and endDate are not null, add date range conditions
-        if (startDate != null && endDate != null) {
-
-            // Convert Date objects to Firestore Timestamps
-
-            // Calculate the start of the selected day (00:00:00.000)
-            Calendar startOfDayCalendar = Calendar.getInstance();
-            startOfDayCalendar.setTime(startDate);
-            startOfDayCalendar.set(Calendar.HOUR_OF_DAY, 0);
-            startOfDayCalendar.set(Calendar.MINUTE, 0);
-            startOfDayCalendar.set(Calendar.SECOND, 0);
-            startOfDayCalendar.set(Calendar.MILLISECOND, 0);
-
-            Timestamp startTimestamp = new Timestamp(startOfDayCalendar.getTime());
-
-            // Calculate the end of the selected day (23:59:59.999)
-            Calendar endOfDayCalendar = Calendar.getInstance();
-            endOfDayCalendar.setTime(endDate);
-            endOfDayCalendar.set(Calendar.HOUR_OF_DAY, 23);
-            endOfDayCalendar.set(Calendar.MINUTE, 59);
-            endOfDayCalendar.set(Calendar.SECOND, 59);
-            endOfDayCalendar.set(Calendar.MILLISECOND, 999);
-
-            Timestamp endTimestamp = new Timestamp(endOfDayCalendar.getTime());
-
-            query = query.whereGreaterThanOrEqualTo("Date", startTimestamp);
-            query = query.whereLessThanOrEqualTo("Date", endTimestamp);
-        }
-
-        // Store the data in a list
-        List<Transaction> transactionArrayList = new ArrayList<>();
-
-        // Clear the arrayList initially
-        transactionArrayList.clear();
-
-        // Execute the query
-        query.get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    // Check if there are any documents in the result
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        // Loop through the documents
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            // Access the data in each document
-                            Map<String, Object> data = document.getData();
-
-                            // access specific fields
-                            String amount = (String) data.get("Amount");
-                            String category = (String) data.get("Category");
-                            Timestamp timestamp = (Timestamp) data.get("Date");
-                            String note = (String) data.get("Note");
-
-                            // Convert Firestore Timestamp to Java Date
-                            Date date = timestamp.toDate();
-
-                            // Convert date into "yyyy-MM-dd" format
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                            String dateString = dateFormat.format(date);
-
-                            // Create a new Transaction
-                            Transaction transaction = new Transaction(amount, category, dateString, note);
-
-                            // Add transaction to the arrayList
-                            transactionArrayList.add(transaction);
-                        }
-                    } else {
-                        // No documents found
-                        Log.d(TAG, "No documents found in the 'Transactions' collection.");
-                    }
-
-                    // Create an instance of the CardAdapter once, after retrieving all data
-                    CardAdapter cardAdapter = new CardAdapter(transactionArrayList);
-
-                    // Find your RecyclerView by its ID
-                    RecyclerView recyclerView = root.findViewById(R.id.transactionsRecyclerView);
-
-                    // Create a LinearLayoutManager
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                    recyclerView.setLayoutManager(layoutManager);
-
-                    // Set the CardAdapter as the adapter for your RecyclerView
-                    recyclerView.setAdapter(cardAdapter);
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error getting documents", e);
-                    }
-                });
-    }
-
     // A method to get the start date and end date from the dateString and finally filter the transactions
     private void dateAndCategoryFilter (String dateString, String categoryString, View root){
+
+        String categorySubString = categoryString.substring(10); // get the category selected
 
         if (dateString.substring(6).equals("Today")){
 
@@ -458,8 +355,6 @@ public class TransactionFragment extends Fragment {
             startDate = currentDate;
             endDate = currentDate;
 
-
-            categoryString = categoryString.substring(10);
         }
 
         else if (dateString.substring(6).equals("This week")){
@@ -475,8 +370,6 @@ public class TransactionFragment extends Fragment {
 
             startDate = mondayDate;
             endDate = sundayDate;
-
-            categoryString = categoryString.substring(10); // get the category selected
 
         }
 
@@ -502,8 +395,6 @@ public class TransactionFragment extends Fragment {
             // Get the end date (last day of the month)
             endDate = calendar.getTime();
 
-            categoryString = categoryString.substring(10); // get the category selected
-
         }
         else {
 
@@ -521,10 +412,6 @@ public class TransactionFragment extends Fragment {
                     startDate = dateFormat.parse(startDateString);
                     endDate = dateFormat.parse(endDateString);
 
-                    // Now, startDate and endDate contain the parsed Date objects
-
-                    categoryString = categoryString.substring(10); // get the category selected
-
                 } catch (ParseException e) {
                     // Handle parsing exception
                     e.printStackTrace();
@@ -536,7 +423,96 @@ public class TransactionFragment extends Fragment {
         }
 
         // Call fireStoreAccess method to filter based the the category, startDate and endDate
-        fireStoreAccess(categoryString, startDate, endDate, root);
+        fireStoreAccess(categorySubString, startDate, endDate, root);
+    }
+
+
+    private void fireStoreAccess(String categorySubString, Date startDate, Date endDate, View root) {
+
+        // Access a Cloud Firestore instance from your Activity
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Create a reference to the "Transactions" collection
+        CollectionReference transactionsRef = db.collection("Transactions");
+
+        Query query = transactionsRef;
+
+        // If the category is not "All", add a filter to the query to filter by category
+        if (!categorySubString.equals("All")) {
+            query = query.whereEqualTo("Category", categorySubString);
+        }
+
+        // If both startDate and endDate are not null, add date range conditions
+        if (startDate != null && endDate != null) {
+            // Format the Date objects to match the format of your Firestore "Date" field
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+            String startDateString = dateFormat.format(startDate);
+            String endDateString = dateFormat.format(endDate);
+
+            // Add date range conditions
+            query = query.whereGreaterThanOrEqualTo("Date", startDateString);
+            query = query.whereLessThanOrEqualTo("Date", endDateString);
+
+            // Sort the documents in ascending order based on the "Date" field
+            query = query.orderBy("Date", Query.Direction.DESCENDING);
+
+        }
+
+        // Store the data in a list
+        List<Transaction> transactionArrayList = new ArrayList<>();
+
+        // Clear the arrayList initially
+        transactionArrayList.clear();
+
+        // Execute the query
+        query.get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    // Check if there are any documents in the result
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        // Loop through the documents
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            // Access the data in each document
+                            Map<String, Object> data = document.getData();
+
+                            // access specific fields
+                            String documentId = document.getId();
+                            String amount = (String) data.get("Amount");
+                            String category = (String) data.get("Category");
+                            String date = (String) data.get("Date");
+                            String note = (String) data.get("Note");
+
+
+                            // Create a new Transaction
+                            Transaction transaction = new Transaction(documentId,amount,
+                                    category, date, note);
+
+                            // Add transaction to the arrayList
+                            transactionArrayList.add(transaction);
+                        }
+                    } else {
+                        // No documents found
+                        Log.d(TAG, "No documents found in the 'Transactions' collection.");
+                    }
+
+                    // Create an instance of the CardAdapter once, after retrieving all data
+                    CardAdapter cardAdapter = new CardAdapter(transactionArrayList, getActivity(), root);
+
+                    // Find your RecyclerView by its ID
+                    RecyclerView recyclerView = root.findViewById(R.id.transactionsRecyclerView);
+
+                    // Create a LinearLayoutManager
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                    recyclerView.setLayoutManager(layoutManager);
+
+                    // Set the CardAdapter as the adapter for your RecyclerView
+                    recyclerView.setAdapter(cardAdapter);
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error getting documents", e);
+                    }
+                });
     }
 
     @Override

@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -14,8 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,27 +28,43 @@ import com.google.firebase.Timestamp;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 public class CashInActivity extends AppCompatActivity {
 
-    private EditText cashInAmountEditText;
+    private EditText cashInDateEditText;
+
+    private Calendar calendar = Calendar.getInstance();
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    // To store the date selected by user using date picker (set the value to today by default)
+    private String selectedDate = dateFormat.format(calendar.getTime());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cash_in);
 
-
-        TextView cashInBalanceTextView = findViewById(R.id.CashInBalancetv);
-        // Display the current balance of the user
-        cashInBalanceTextView.setText("Total balance: ");
-
-        cashInAmountEditText = findViewById(R.id.CashInAmountet);
+        EditText cashInAmountEditText = findViewById(R.id.CashInAmountet);
         // Set the maximum decimal place for the edit text to 2
         cashInAmountEditText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
+
+        // Find the EditText for the date
+        cashInDateEditText = findViewById(R.id.CashInDateet);
+
+        // Set an OnClickListener for the date EditText
+        cashInDateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Show the date picker dialog
+                showDatePicker();
+            }
+        });
 
         EditText cashInNoteEditText = findViewById(R.id.CashInNoteet);
 
@@ -87,8 +104,9 @@ public class CashInActivity extends AppCompatActivity {
                     Map<String, Object> CashInTrans = new HashMap<>();
                     CashInTrans.put("Amount", cashInAmountEditText.getText().toString());
                     CashInTrans.put("Category", "Cash in");
-                    CashInTrans.put("Date", Timestamp.now());
+                    CashInTrans.put("Date", selectedDate);
                     CashInTrans.put("Note", cashInNoteEditText.getText().toString());
+                    CashInTrans.put("Last Updated Time", Timestamp.now());
 
                     // Add a new document with a generated ID
                     db.collection("Transactions")
@@ -132,10 +150,67 @@ public class CashInActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Method to show the date picker dialog and return the selected date as a String
+    private void showDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+
+        // Create a DatePickerDialog with current date as default
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Get the selected date
+                        Calendar selectedCalendar = Calendar.getInstance();
+                        selectedCalendar.set(year, month, dayOfMonth);
+
+                        // Get the current date
+                        Calendar currentDateCalendar = Calendar.getInstance();
+
+                        // Compare the selected date with the current date
+                        if (selectedCalendar.get(Calendar.YEAR) == currentDateCalendar.get(Calendar.YEAR) &&
+                                selectedCalendar.get(Calendar.MONTH) == currentDateCalendar.get(Calendar.MONTH) &&
+                                selectedCalendar.get(Calendar.DAY_OF_MONTH) == currentDateCalendar.get(Calendar.DAY_OF_MONTH)) {
+                            // Selected date is today
+                            selectedDate = dateFormat.format(selectedCalendar.getTime());
+                            cashInDateEditText.setText("Today");
+                        } else {
+                            // Calculate the difference in days
+                            long diffInMillis = selectedCalendar.getTimeInMillis() - currentDateCalendar.getTimeInMillis();
+                            long diffDays = TimeUnit.MILLISECONDS.toDays(diffInMillis);
+
+                            if (diffDays == 1) {
+                                // Selected date is tomorrow;
+                                selectedDate = dateFormat.format(selectedCalendar.getTime());
+                                cashInDateEditText.setText("Tomorrow");
+                            } else if (diffDays == -1) {
+                                // Selected date is yesterday
+                                selectedDate = dateFormat.format(selectedCalendar.getTime());
+                                cashInDateEditText.setText("Yesterday");
+                            } else {
+                                // Not today, tomorrow, or yesterday, display the selected date
+                                selectedDate = dateFormat.format(selectedCalendar.getTime());
+                                cashInDateEditText.setText(selectedDate);
+                            }
+                        }
+
+
+                    }
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        );
+
+        // Show the date picker dialog
+        datePickerDialog.show();
+
+    }
+
     // Function to update the balance in Firestore
     private void increaseBalance(FirebaseFirestore db, double amount) {
         // Get the current balance document
-        DocumentReference balanceRef = db.collection("Balance").document("JtzWpeI9bBUdOwOO4oWP");
+        DocumentReference balanceRef = db.collection("Balance").document("f8dT4dq1c74zpSwITBJR");
 
         // Update the balance by adding the transaction amount
         balanceRef.update("amount", FieldValue.increment(amount))
