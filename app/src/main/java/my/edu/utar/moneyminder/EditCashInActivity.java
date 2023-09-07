@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
@@ -120,6 +121,7 @@ public class EditCashInActivity extends AppCompatActivity {
                         updates.put("Amount", cashInEditAmountEditText.getText().toString());
                         updates.put("Date", selectedDate);
                         updates.put("Note", cashInEditNoteEditText.getText().toString());
+                        updates.put("Last Updated Time", Timestamp.now());
 
                         Transaction transaction = new Transaction( documentId,
                                 cashInEditAmountEditText.getText().toString(),
