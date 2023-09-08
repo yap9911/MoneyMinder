@@ -4,6 +4,8 @@ import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import android.content.SharedPreferences;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -78,6 +80,7 @@ public class CashInActivity extends AppCompatActivity {
 
         Button CashInAddButton = findViewById(R.id.CashInAddButton);
 
+
         CashInAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +104,38 @@ public class CashInActivity extends AppCompatActivity {
                 } else {
                     validAmount = true;     // amount is a valid input
                 }
+
+                double currentBalance = getCurrentBalance();
+                double updatedBalance = currentBalance + amount;
+                saveCurrentBalance(updatedBalance);
+
+                // Check if the milestone is reached
+                Milestone milestone = new Milestone(updatedBalance);
+                boolean milestoneReached = milestone.isMilestoneReached(updatedBalance);
+                if (milestoneReached) {
+                    // The milestone has been reached
+                    // You can perform further actions here
+                    Toast.makeText(CashInActivity.this, "Milestone reached!", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+            }
+
+
+            private void saveCurrentBalance(double balance) {
+                SharedPreferences sharedPreferences = getSharedPreferences("current_balance", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putFloat("current_balance", (float) balance);
+                editor.apply();
+            }
+
+            private double getCurrentBalance() {
+                SharedPreferences sharedPreferences = getSharedPreferences("current_balance", MODE_PRIVATE);
+                return sharedPreferences.getFloat("current_balance", 0.0f);
+
+            }
+        });
 
                 if (validAmount){
 
