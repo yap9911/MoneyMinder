@@ -154,7 +154,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.transactionHol
                 // Update the balance by subtracting the original amount and adding the updated amount
                 Map<String, Object> updates = new HashMap<>();
 
-                updates.put("amount", FieldValue.increment(- Double.parseDouble(transaction.getAmount())));
+                if(transaction.getCategory().equals("Cash in")) {
+                    updates.put("CashInAmount", FieldValue.increment(-Double.parseDouble(transaction.getAmount())));
+                }
+                else {
+                    updates.put("CashOutAmount", FieldValue.increment(-Double.parseDouble(transaction.getAmount())));
+                }
 
                 // Delete the document from Firestore
                 docRef.delete()

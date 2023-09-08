@@ -269,7 +269,7 @@ public class EditCashOutActivity extends AppCompatActivity {
 
         // Update the balance by subtracting the original amount and adding the updated amount
         Map<String, Object> updates = new HashMap<>();
-        updates.put("amount", FieldValue.increment(-originalAmount + updatedAmount));
+        updates.put("CashOutAmount", FieldValue.increment(-originalAmount + updatedAmount));
 
         balanceRef.update(updates)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
