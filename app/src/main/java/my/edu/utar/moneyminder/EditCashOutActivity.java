@@ -64,7 +64,6 @@ public class EditCashOutActivity extends AppCompatActivity {
             String category = intent.getStringExtra("category");
             String date = intent.getStringExtra("date");
             String note = intent.getStringExtra("note");
-            int position = intent.getIntExtra("position", -1);
 
             EditText cashOutEditAmountEditText = findViewById(R.id.editCashOutAmountet);
             cashOutEditAmountEditText.setFilters(new InputFilter[]{new CashInActivity.DecimalDigitsInputFilter(2)});
@@ -269,7 +268,7 @@ public class EditCashOutActivity extends AppCompatActivity {
 
         // Update the balance by subtracting the original amount and adding the updated amount
         Map<String, Object> updates = new HashMap<>();
-        updates.put("amount", FieldValue.increment(-originalAmount + updatedAmount));
+        updates.put("CashOutAmount", FieldValue.increment(-originalAmount + updatedAmount));
 
         balanceRef.update(updates)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

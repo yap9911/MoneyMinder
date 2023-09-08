@@ -45,8 +45,8 @@ public class HomeFragment extends Fragment {
     private PieChart pieChart;
     private TextView balanceTextView;
     private TextView spendingTextView;
-    private double totalSpending;
-    private double totalBalance;
+    private double totalCashIn;
+    private double totalCashOut;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -84,11 +84,12 @@ public class HomeFragment extends Fragment {
 
     private void setupPieChart() {
         ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry((float) totalSpending, "Spending"));
-        entries.add(new PieEntry((float) (totalBalance - totalSpending), "Balance"));
+        entries.add(new PieEntry((float) totalCashOut, "Spending"));
+        entries.add(new PieEntry((float) (totalCashIn - totalCashOut), "Balance"));
 
         PieDataSet dataSet = new PieDataSet(entries, "Budget Summary");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet.setValueTextSize(16f);
         PieData pieData = new PieData(dataSet);
 
         pieChart.setData(pieData);
@@ -107,14 +108,14 @@ public class HomeFragment extends Fragment {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             // Document exists, you can access its data
-                            double amount = documentSnapshot.getDouble("amount");
-                            double spending = documentSnapshot.getDouble("Spending");
+                            double CashInAmount = documentSnapshot.getDouble("CashInAmount");
+                            double CashOutAmount = documentSnapshot.getDouble("CashOutAmount");
 
-                            totalBalance = amount;
-                            totalSpending = spending;
+                            totalCashIn = CashInAmount;
+                            totalCashOut= CashOutAmount;
 
-                            balanceTextView.setText("Total balance: " + String.valueOf(totalBalance));
-                            spendingTextView.setText("Total spending: " + String.valueOf(spending));
+                            balanceTextView.setText("Total cash in: " + String.valueOf(totalCashIn));
+                            spendingTextView.setText("Total cash out: " + String.valueOf(totalCashOut));
                             setupPieChart();
 
                             // Do something with these values

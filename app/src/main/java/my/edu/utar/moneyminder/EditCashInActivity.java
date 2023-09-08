@@ -60,7 +60,6 @@ public class EditCashInActivity extends AppCompatActivity {
             Double originalAmount = Double.parseDouble(amount);
             String date = intent.getStringExtra("date");
             String note = intent.getStringExtra("note");
-            int position = intent.getIntExtra("position", -1);
 
 
             EditText cashInEditAmountEditText = findViewById(R.id.editCashInAmountet);
@@ -236,7 +235,7 @@ public class EditCashInActivity extends AppCompatActivity {
 
         // Update the balance by subtracting the original amount and adding the updated amount
         Map<String, Object> updates = new HashMap<>();
-        updates.put("amount", FieldValue.increment(-originalAmount + updatedAmount));
+        updates.put("CashInAmount", FieldValue.increment(-originalAmount + updatedAmount));
 
         balanceRef.update(updates)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

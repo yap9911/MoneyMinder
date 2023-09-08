@@ -237,7 +237,7 @@ public class CashOutActivity extends AppCompatActivity {
         // Create a Map to specify the updates for both fields
         Map<String, Object> updates = new HashMap<>();
         updates.put("amount", FieldValue.increment(-amount)); // Update the "amount" field
-        updates.put("Spending", amount); // Update the "Spending" field
+        updates.put("Spending", FieldValue.increment(amount)); // Update the "Spending" field
 
 
         // Update the balance by adding the transaction amount

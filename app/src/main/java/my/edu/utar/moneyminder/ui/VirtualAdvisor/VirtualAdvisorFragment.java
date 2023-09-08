@@ -61,7 +61,7 @@ public class VirtualAdvisorFragment extends Fragment {
                     // Assuming you want to display the first document's "number" field
                     DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
                     if (document != null) {
-                        Long number = document.getLong("amount");
+                        Long number = document.getLong("CashInAmount") - document.getLong("CashOutAmount");
                         if (number != null) {
                             // Set the number in the TextView
                             tv1.setText("Total Balance: RM" + String.valueOf(number) +"\nEssentials: 40%\nWants: 20%\nSavings: 40%");
