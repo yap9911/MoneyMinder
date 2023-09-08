@@ -3,6 +3,8 @@ package my.edu.utar.moneyminder;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -45,6 +47,7 @@ public class CashInActivity extends AppCompatActivity {
 
         Button CashInAddButton = findViewById(R.id.CashInAddButton);
 
+
         CashInAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +73,40 @@ public class CashInActivity extends AppCompatActivity {
                     Toast.makeText(CashInActivity.this, "Woohoo~ Money in the bank!",
                             Toast.LENGTH_SHORT).show();
                 }
+
+
+                
+
+
+                double currentBalance = getCurrentBalance();
+                double updatedBalance = currentBalance + amount;
+                saveCurrentBalance(updatedBalance);
+
+                // Check if the milestone is reached
+                Milestone milestone = new Milestone(updatedBalance);
+                boolean milestoneReached = milestone.isMilestoneReached(updatedBalance);
+                if (milestoneReached) {
+                    // The milestone has been reached
+                    // You can perform further actions here
+                    Toast.makeText(CashInActivity.this, "Milestone reached!", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+            }
+
+
+            private void saveCurrentBalance(double balance) {
+                SharedPreferences sharedPreferences = getSharedPreferences("current_balance", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putFloat("current_balance", (float) balance);
+                editor.apply();
+            }
+
+            private double getCurrentBalance() {
+                SharedPreferences sharedPreferences = getSharedPreferences("current_balance", MODE_PRIVATE);
+                return sharedPreferences.getFloat("current_balance", 0.0f);
+
             }
         });
 

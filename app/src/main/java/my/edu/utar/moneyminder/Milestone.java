@@ -3,11 +3,13 @@ package my.edu.utar.moneyminder;
 public class Milestone {
     private double targetAmount;
     private boolean milestoneReached;
-
     public Milestone(double targetAmount) {
         this.targetAmount = targetAmount;
         this.milestoneReached = false;
     }
+
+
+
 
     public void setTargetAmount(double targetAmount) {
         this.targetAmount = targetAmount;
@@ -19,7 +21,7 @@ public class Milestone {
     }
 
     public boolean isMilestoneReached(double currentAmount) {
-        if (!milestoneReached && currentAmount >= targetAmount * 0.5) {
+        if (!milestoneReached && currentAmount >= targetAmount) {
             milestoneReached = true;
             return true;
         }
@@ -30,3 +32,4 @@ public class Milestone {
         return currentAmount >= targetAmount;
     }
 }
+
