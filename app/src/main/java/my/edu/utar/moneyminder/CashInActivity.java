@@ -65,10 +65,6 @@ public class CashInActivity extends AppCompatActivity {
         // Find the EditText for the date
         cashInDateEditText = findViewById(R.id.CashInDateet);
 
-        TextView cashInBalanceTextView = findViewById(R.id.CashInBalancetv);
-        // Display the current balance of the user
-        cashInBalanceTextView.setText("Total balance: ");
-
         // Set an OnClickListener for the date EditText
         cashInDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +133,7 @@ public class CashInActivity extends AppCompatActivity {
                                     Log.w(TAG, "Error adding document", e);
                                 }
                             });
+
                     openMainActivity();
                 }
 
@@ -239,6 +236,7 @@ public class CashInActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     // Method to return to Main Activity
     public void openMainActivity(){

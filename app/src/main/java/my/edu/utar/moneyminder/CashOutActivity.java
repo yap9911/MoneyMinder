@@ -234,12 +234,18 @@ public class CashOutActivity extends AppCompatActivity {
         // Get the current balance document
         DocumentReference balanceRef = db.collection("Balance").document("f8dT4dq1c74zpSwITBJR");
 
+        // Create a Map to specify the updates for both fields
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("amount", FieldValue.increment(-amount)); // Update the "amount" field
+        updates.put("Spending", amount); // Update the "Spending" field
+
+
         // Update the balance by adding the transaction amount
-        balanceRef.update("amount", FieldValue.increment(-amount))
+        balanceRef.update(updates)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "Balance updated successfully.");
+                        Log.d(TAG, "Balance and Spending updated successfully.");
                         openMainActivity();
                     }
                 })

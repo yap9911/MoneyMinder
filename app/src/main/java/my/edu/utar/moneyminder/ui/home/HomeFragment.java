@@ -2,24 +2,27 @@ package my.edu.utar.moneyminder.ui.home;
 
 
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Button;
-import android.widget.EditText;
 
 
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
-
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 import java.util.ArrayList;
@@ -27,6 +30,9 @@ import java.util.ArrayList;
 
 
 import androidx.fragment.app.Fragment;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
+
 import my.edu.utar.moneyminder.CashInActivity;
 import my.edu.utar.moneyminder.CashOutActivity;
 import my.edu.utar.moneyminder.databinding.FragmentHomeBinding;
@@ -35,16 +41,12 @@ import my.edu.utar.moneyminder.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
-
-
     private FragmentHomeBinding binding;
     private PieChart pieChart;
     private TextView balanceTextView;
     private TextView spendingTextView;
-    private double totalBalance = 0.00;
-    private double totalSpending = 0.00;
-
-
+    private double totalSpending;
+    private double totalBalance;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -52,13 +54,13 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
-
         balanceTextView = binding.balanceTextView;
         spendingTextView = binding.spendingTextView;
         pieChart = binding.pieChart;
 
-        setupPieChart();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        getBalanceAndSpending(db);
 
         binding.addFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,19 +81,6 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    private void addBalance(double amount) {
-        totalBalance += amount;
-        updateUI();
-    }
-
-    private void addSpending(double spendingAmount) {
-        totalSpending += spendingAmount;
-        totalBalance -= spendingAmount;
-        if (totalBalance < 0) {
-            totalBalance = 0;
-        }
-        updateUI();
-    }
 
     private void setupPieChart() {
         ArrayList<PieEntry> entries = new ArrayList<>();
@@ -108,12 +97,40 @@ public class HomeFragment extends Fragment {
     }
 
 
+    private void getBalanceAndSpending(FirebaseFirestore db){
+        // Assuming you have a DocumentReference for the document you want to retrieve
+        DocumentReference balanceRef = db.collection("Balance").document("f8dT4dq1c74zpSwITBJR");
 
-    private void updateUI() {
-        balanceTextView.setText(String.format("Balance: $%.2f", totalBalance));
-        spendingTextView.setText(String.format("Spending: $%.2f", totalSpending));
+        balanceRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            // Document exists, you can access its data
+                            double amount = documentSnapshot.getDouble("amount");
+                            double spending = documentSnapshot.getDouble("Spending");
 
-        setupPieChart();
+                            totalBalance = amount;
+                            totalSpending = spending;
+
+                            balanceTextView.setText("Total balance: " + String.valueOf(totalBalance));
+                            spendingTextView.setText("Total spending: " + String.valueOf(spending));
+                            setupPieChart();
+
+                            // Do something with these values
+                        } else {
+                            // Document does not exist
+                            Log.d(TAG, "Document does not exist");
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle errors
+                        Log.w(TAG, "Error reading document", e);
+                    }
+                });
     }
 
     public void openCashInActivity() {

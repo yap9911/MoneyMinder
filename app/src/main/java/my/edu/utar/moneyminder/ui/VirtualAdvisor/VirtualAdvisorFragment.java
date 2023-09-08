@@ -64,14 +64,14 @@ public class VirtualAdvisorFragment extends Fragment {
                         Long number = document.getLong("amount");
                         if (number != null) {
                             // Set the number in the TextView
-                            tv1.setText("Balance this month: RM" + String.valueOf(number) +"\nEssentials: 40%\nWants: 20%\nSavings: 40%");
-                            tv2.setText("Balance this month: RM" + String.valueOf(number) +"\nEssentials: 50%\nWants: 20%\nSavings: 30%");
-                            tv3.setText("Balance this month: RM" + String.valueOf(number) +"\nEssentials: 60%\nWants: 25%\nSavings: 15%");
+                            tv1.setText("Total Balance: RM" + String.valueOf(number) +"\nEssentials: 40%\nWants: 20%\nSavings: 40%");
+                            tv2.setText("Total Balance: RM" + String.valueOf(number) +"\nEssentials: 50%\nWants: 20%\nSavings: 30%");
+                            tv3.setText("Total Balance: RM" + String.valueOf(number) +"\nEssentials: 60%\nWants: 25%\nSavings: 15%");
 
                             button1.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    showAlert("Budget Saving Plan 1: The Aggressive Saver", "Balance this month: RM" + String.valueOf(number) +
+                                    showAlert("Budget Saving Plan 1: The Aggressive Saver", "Total Balance: RM" + String.valueOf(number) +
                                             "\n\nEssentials (40%): RM" + String.valueOf(number*40/100) + "\nCategory: Housing, Utilities, Groceries, Transportation, Bill" +
                                             "\n\nWants (20%): RM" + String.valueOf(number*20/100) + "\nCategory: Food & Beverage, Fun, Hobby, Shopping" +
                                             "\n\nSavings & Debt Repayment (40%): RM" + String.valueOf(number*40/100) + "\nCategory: Emergency Fund, Retirement Contributions, Aggressive Debt Repayment, Medicine");
@@ -81,7 +81,7 @@ public class VirtualAdvisorFragment extends Fragment {
                             button2.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    showAlert("Budget Saving Plan 2: The Balanced Saver", "Balance this month: RM" + String.valueOf(number) +
+                                    showAlert("Budget Saving Plan 2: The Balanced Saver", "Total Balance: RM" + String.valueOf(number) +
                                             "\n\nEssentials (50%): RM" + String.valueOf(number*50/100) + "\nCategory: Housing, Utilities, Groceries, Transportation, Bill" +"\n" +
                                             "\n\nWants (20%): RM" + String.valueOf(number*20/100) + "\nCategory: Food & Beverage, Fun, Hobby, Shopping"  +
                                             "\n\nSavings & Debt Repayment (30%): RM" + String.valueOf(number*30/100) + "\nCategory: Emergency Fund, Retirement Contributions, Debt Repayment, Medicine");
@@ -91,7 +91,7 @@ public class VirtualAdvisorFragment extends Fragment {
                             button3.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    showAlert("Budget Saving Plan 3: The Lifestyle Focused", "Balance this month: RM" + String.valueOf(number)  +
+                                    showAlert("Budget Saving Plan 3: The Lifestyle Focused", "Total Balance: RM" + String.valueOf(number)  +
                                             "\n\nEssentials (60%): RM" + String.valueOf(number*60/100) + "\nCategory: Housing, Utilities, Groceries, Transportation, Bill" +"\n" +
                                             "\n\nWants (25%): RM" + String.valueOf(number*25/100) + "\nCategory: Food & Beverage, Fun, Hobby, Shopping"  +
                                             "\n\nSavings & Debt Repayment (15%): RM" + String.valueOf(number*15/100) + "\nCategory: Emergency Fund, Retirement Contributions, Debt Repayment, Medicine");
