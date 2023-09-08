@@ -105,39 +105,20 @@ public class CashInActivity extends AppCompatActivity {
                     validAmount = true;     // amount is a valid input
                 }
 
-                double currentBalance = getCurrentBalance();
-                double updatedBalance = currentBalance + amount;
-                saveCurrentBalance(updatedBalance);
-
-                // Check if the milestone is reached
-                Milestone milestone = new Milestone(updatedBalance);
-                boolean milestoneReached = milestone.isMilestoneReached(updatedBalance);
-                if (milestoneReached) {
-                    // The milestone has been reached
-                    // You can perform further actions here
-                    Toast.makeText(CashInActivity.this, "Milestone reached!", Toast.LENGTH_SHORT).show();
-                }
-
-
-
-            }
-
-
-            private void saveCurrentBalance(double balance) {
-                SharedPreferences sharedPreferences = getSharedPreferences("current_balance", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putFloat("current_balance", (float) balance);
-                editor.apply();
-            }
-
-            private double getCurrentBalance() {
-                SharedPreferences sharedPreferences = getSharedPreferences("current_balance", MODE_PRIVATE);
-                return sharedPreferences.getFloat("current_balance", 0.0f);
-
-            }
-        });
-
                 if (validAmount){
+
+                    double currentBalance = getCurrentBalance();
+                    double updatedBalance = currentBalance + amount;
+                    saveCurrentBalance(updatedBalance);
+
+                    // Check if the milestone is reached
+                    Milestone milestone = new Milestone(updatedBalance);
+                    boolean milestoneReached = milestone.isMilestoneReached(updatedBalance);
+                    if (milestoneReached) {
+                        // The milestone has been reached
+                        // You can perform further actions here
+                        Toast.makeText(CashInActivity.this, "Milestone reached!", Toast.LENGTH_SHORT).show();
+                    }
 
                     // Access a Cloud Firestore instance from your Activity
 
@@ -174,6 +155,20 @@ public class CashInActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    private void saveCurrentBalance(double balance) {
+        SharedPreferences sharedPreferences = getSharedPreferences("current_balance", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putFloat("current_balance", (float) balance);
+        editor.apply();
+    }
+
+    private double getCurrentBalance() {
+        SharedPreferences sharedPreferences = getSharedPreferences("current_balance", MODE_PRIVATE);
+        return sharedPreferences.getFloat("current_balance", 0.0f);
+
     }
 
     @Override

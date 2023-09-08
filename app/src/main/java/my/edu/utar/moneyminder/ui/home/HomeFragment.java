@@ -3,6 +3,7 @@ package my.edu.utar.moneyminder.ui.home;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.text.InputType;
@@ -14,16 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
 import static android.content.ContentValues.TAG;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,7 +45,6 @@ import my.edu.utar.moneyminder.CashOutActivity;
 import my.edu.utar.moneyminder.Milestone;
 import my.edu.utar.moneyminder.R;
 import my.edu.utar.moneyminder.databinding.FragmentHomeBinding;
-
 
 
 public class HomeFragment extends Fragment {
@@ -112,7 +105,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
         binding.removeFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,10 +116,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
-
-    private void showSetMilestoneDialog(){
+    private void showSetMilestoneDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Set Milestone Amount");
 
@@ -157,76 +146,61 @@ public class HomeFragment extends Fragment {
         });
 
         builder.show();
-
-    private void setupPieChart() {
-        ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry((float) totalCashOut, "Spending"));
-        entries.add(new PieEntry((float) (totalCashIn - totalCashOut), "Balance"));
-
-        PieDataSet dataSet = new PieDataSet(entries, "Budget Summary");
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        dataSet.setValueTextSize(16f);
-        PieData pieData = new PieData(dataSet);
-
-        pieChart.setData(pieData);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.invalidate(); // Refresh chart
     }
 
+        private void setupPieChart () {
+            ArrayList<PieEntry> entries = new ArrayList<>();
+            entries.add(new PieEntry((float) totalCashOut, "Spending"));
+            entries.add(new PieEntry((float) (totalCashIn - totalCashOut), "Balance"));
 
-    private void getBalanceAndSpending(FirebaseFirestore db){
-        // Assuming you have a DocumentReference for the document you want to retrieve
-        DocumentReference balanceRef = db.collection("Balance").document("f8dT4dq1c74zpSwITBJR");
+            PieDataSet dataSet = new PieDataSet(entries, "Budget Summary");
+            dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+            dataSet.setValueTextSize(16f);
+            PieData pieData = new PieData(dataSet);
 
-        balanceRef.get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            // Document exists, you can access its data
-                            double CashInAmount = documentSnapshot.getDouble("CashInAmount");
-                            double CashOutAmount = documentSnapshot.getDouble("CashOutAmount");
+            pieChart.setData(pieData);
+            pieChart.getDescription().setEnabled(false);
+            pieChart.invalidate(); // Refresh chart
+        }
 
-                            totalCashIn = CashInAmount;
-                            totalCashOut= CashOutAmount;
 
-                            balanceTextView.setText("Total cash in: " + String.valueOf(totalCashIn));
-                            spendingTextView.setText("Total cash out: " + String.valueOf(totalCashOut));
-                            setupPieChart();
+        private void getBalanceAndSpending (FirebaseFirestore db){
+            // Assuming you have a DocumentReference for the document you want to retrieve
+            DocumentReference balanceRef = db.collection("Balance").document("f8dT4dq1c74zpSwITBJR");
 
-                            // Do something with these values
-                        } else {
-                            // Document does not exist
-                            Log.d(TAG, "Document does not exist");
+            balanceRef.get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                // Document exists, you can access its data
+                                double CashInAmount = documentSnapshot.getDouble("CashInAmount");
+                                double CashOutAmount = documentSnapshot.getDouble("CashOutAmount");
+
+                                totalCashIn = CashInAmount;
+                                totalCashOut = CashOutAmount;
+
+                                balanceTextView.setText("Total cash in: " + String.valueOf(totalCashIn));
+                                spendingTextView.setText("Total cash out: " + String.valueOf(totalCashOut));
+                                setupPieChart();
+
+                                // Do something with these values
+                            } else {
+                                // Document does not exist
+                                Log.d(TAG, "Document does not exist");
+                            }
                         }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Handle errors
-                        Log.w(TAG, "Error reading document", e);
-                    }
-                });
-    }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Handle errors
+                            Log.w(TAG, "Error reading document", e);
+                        }
+                    });
+        }
 
-    public void openCashInActivity() {
-        Intent intent = new Intent(getContext(), CashInActivity.class);
-        startActivity(intent);
-    }
-
-    public void openCashOutActivity() {
-        Intent intent = new Intent(getContext(), CashOutActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    private void updateMilestoneTextView() {
+    private void updateMilestoneTextView () {
         if (milestone != null) {
             TextView milestoneTextView = getView().findViewById(R.id.milestoneTextView);
             if (milestoneTextView != null) {
@@ -243,6 +217,24 @@ public class HomeFragment extends Fragment {
             Toast.makeText(requireContext(), "Congratulations! You've fully reached your milestone.", Toast.LENGTH_SHORT).show();
         }
     }
+
+        public void openCashInActivity () {
+            Intent intent = new Intent(getContext(), CashInActivity.class);
+            startActivity(intent);
+        }
+
+        public void openCashOutActivity () {
+            Intent intent = new Intent(getContext(), CashOutActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onDestroyView () {
+            super.onDestroyView();
+            binding = null;
+        }
+
+
 
     }
 
