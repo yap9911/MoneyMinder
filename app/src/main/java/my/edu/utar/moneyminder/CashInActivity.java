@@ -250,8 +250,8 @@ public class CashInActivity extends AppCompatActivity {
         // Get the current balance document
         DocumentReference balanceRef = db.collection("Balance").document("f8dT4dq1c74zpSwITBJR");
 
-        // Update the balance by adding the transaction amount
-        balanceRef.update("amount", FieldValue.increment(amount))
+        // Update the "CashInAmount" field by adding the transaction amount
+        balanceRef.update("CashInAmount", FieldValue.increment(amount))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
