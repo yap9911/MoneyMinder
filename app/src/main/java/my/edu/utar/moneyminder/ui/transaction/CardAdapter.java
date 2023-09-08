@@ -84,8 +84,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.transactionHol
                 editIntent.putExtra("amount", transaction.getAmount());
                 editIntent.putExtra("category", transaction.getCategory());
                 editIntent.putExtra("date", transaction.getDate());
-                editIntent.putExtra("note", transaction.getNote());
-                editIntent.putExtra("position", holder.getAdapterPosition());
+                editIntent.putExtra("note", transaction.getNote());;
 
                 // Start the appropriate edit activity
                 v.getContext().startActivity(editIntent);

@@ -89,6 +89,7 @@ public class HomeFragment extends Fragment {
 
         PieDataSet dataSet = new PieDataSet(entries, "Budget Summary");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet.setValueTextSize(16f);
         PieData pieData = new PieData(dataSet);
 
         pieChart.setData(pieData);

@@ -64,7 +64,6 @@ public class EditCashOutActivity extends AppCompatActivity {
             String category = intent.getStringExtra("category");
             String date = intent.getStringExtra("date");
             String note = intent.getStringExtra("note");
-            int position = intent.getIntExtra("position", -1);
 
             EditText cashOutEditAmountEditText = findViewById(R.id.editCashOutAmountet);
             cashOutEditAmountEditText.setFilters(new InputFilter[]{new CashInActivity.DecimalDigitsInputFilter(2)});

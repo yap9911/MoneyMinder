@@ -60,7 +60,6 @@ public class EditCashInActivity extends AppCompatActivity {
             Double originalAmount = Double.parseDouble(amount);
             String date = intent.getStringExtra("date");
             String note = intent.getStringExtra("note");
-            int position = intent.getIntExtra("position", -1);
 
 
             EditText cashInEditAmountEditText = findViewById(R.id.editCashInAmountet);

@@ -520,6 +520,9 @@ public class TransactionFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        dateString = DateSelected.getText().toString();
+        categoryString = categorySelected.getText().toString();
+
         // Call the method you want to run when the fragment is visible
         dateAndCategoryFilter(dateString, categoryString, root);
     }
