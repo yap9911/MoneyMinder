@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;

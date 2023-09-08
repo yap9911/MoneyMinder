@@ -1,7 +1,7 @@
 package my.edu.utar.moneyminder;
 
 import android.app.DatePickerDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.Menu;
@@ -23,19 +23,17 @@ import java.util.Locale;
 public class CashOutActivity extends AppCompatActivity {
 
     private EditText cashOutDateEditText;
-    private TextView CashOutBalanceTextView;
-    private EditText CashOutAmountEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cash_out);
 
-        CashOutBalanceTextView = findViewById(R.id.CashOutBalancetv);
+        TextView CashOutBalanceTextView = findViewById(R.id.CashOutBalancetv);
         // Display the current balance of the user
         CashOutBalanceTextView.setText("Total balance: ");
 
-        CashOutAmountEditText = findViewById(R.id.CashOutAmountet);
+        EditText CashOutAmountEditText = findViewById(R.id.CashOutAmountet);
         // Set the maximum decimal place for the edit text to 2
         CashOutAmountEditText.setFilters(new InputFilter[]{new CashInActivity.DecimalDigitsInputFilter(2)});
 
@@ -91,6 +89,8 @@ public class CashOutActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 } else {
                     validAmount = true;
+                    Toast.makeText(CashOutActivity.this, "Budgeting is important, but so is enjoying life.",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

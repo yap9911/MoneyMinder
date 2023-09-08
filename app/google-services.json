@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "43533765858",
+    "firebase_url": "https://moneyminderdatabase-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "moneyminderdatabase",
+    "storage_bucket": "moneyminderdatabase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43533765858:android:b62e038c76ae906f41a2bb",
+        "android_client_info": {
+          "package_name": "my.edu.utar.moneyminder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43533765858-blcu4htg6fuo53hv4602gqa5nq57rlp1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcg8WNYeLoZKDH8wdlGoXe89yPwEfd0Q0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43533765858-blcu4htg6fuo53hv4602gqa5nq57rlp1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -27,7 +27,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class CashInActivity extends AppCompatActivity {
 
     @Override
@@ -38,8 +37,6 @@ public class CashInActivity extends AppCompatActivity {
         // Access a Cloud Firestore instance from your Activity
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
 
         TextView cashInBalanceTextView = findViewById(R.id.CashInBalancetv);
         // Display the current balance of the user
@@ -97,6 +94,11 @@ public class CashInActivity extends AppCompatActivity {
                         });
             }
         });
+
+
+        // Access a Cloud Firestore instance from your Activity
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
         // Create a new user with a first and last name
