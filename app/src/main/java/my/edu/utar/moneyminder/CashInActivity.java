@@ -35,6 +35,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class CashInActivity extends AppCompatActivity {
 
@@ -56,6 +64,10 @@ public class CashInActivity extends AppCompatActivity {
 
         // Find the EditText for the date
         cashInDateEditText = findViewById(R.id.CashInDateet);
+
+        TextView cashInBalanceTextView = findViewById(R.id.CashInBalancetv);
+        // Display the current balance of the user
+        cashInBalanceTextView.setText("Total balance: ");
 
         // Set an OnClickListener for the date EditText
         cashInDateEditText.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +142,6 @@ public class CashInActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     @Override
@@ -290,4 +301,3 @@ public class CashInActivity extends AppCompatActivity {
         }
     }
 }
-
