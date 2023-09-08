@@ -1,0 +1,107 @@
+package my.edu.utar.moneyminder;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Button;
+import android.os.Bundle;
+import android.widget.EditText;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import java.util.ArrayList;
+
+public class mainActivity extends AppCompatActivity {
+    private PieChart pieChart;
+    private TextView balanceTextView;
+    private TextView spendingTextView;
+    private double totalBalance = 0.00;
+    private double totalSpending = 0.00;
+    private Button CashInAddButton;
+    private Button CashOutAddButton;
+    private EditText CashInEditText;
+    private EditText CashOutEditText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout);
+
+        balanceTextView = findViewById(R.id.balanceTextView);
+        spendingTextView = findViewById(R.id.spendingTextView);
+        pieChart = findViewById(R.id.pieChart);
+        CashInAddButton = findViewById(R.id.CashInAddButton);
+        CashOutAddButton = findViewById(R.id.CashOutAddButton);
+        CashInEditText = findViewById(R.id.cashInEditText);
+        CashOutEditText = findViewById(R.id.cashOutEditText);
+
+        CashInAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String cashInStr = CashInEditText.getText().toString();
+                if (!cashInStr.isEmpty()) {
+                    try {
+                        double amount = Double.parseDouble(cashInStr);
+                        addBalance(amount);
+                    } catch (NumberFormatException e) {
+                        // Handle the error if you wish (e.g., show a toast)
+                    }
+                }
+            }
+        });
+
+        CashOutAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String cashOutStr = CashOutEditText.getText().toString();
+                if (!cashOutStr.isEmpty()) {
+                    try {
+                        double amount = Double.parseDouble(cashOutStr);
+                        addSpending(amount);
+                    } catch (NumberFormatException e) {
+                        // Handle the error if you wish (e.g., show a toast)
+                    }
+                }
+            }
+        });
+
+        updateUI();
+        pieChart.getDescription().setEnabled(false);
+    }
+
+    private void addBalance(double amount) {
+        totalBalance += amount;
+        updateUI();
+    }
+
+    private void addSpending(double spendingAmount) {
+        totalSpending += spendingAmount;
+        totalBalance -= spendingAmount;
+        if (totalBalance < 0) {
+            totalBalance = 0;
+        }
+        updateUI();
+    }
+
+    private void setupPieChart() {
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry((float) totalSpending, "Spending"));
+        entries.add(new PieEntry((float) (totalBalance - totalSpending), "Balance"));
+
+        PieDataSet dataSet = new PieDataSet(entries, "Budget Summary");
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        PieData pieData = new PieData(dataSet);
+        pieChart.setData(pieData);
+        pieChart.invalidate(); // Refresh chart
+    }
+
+    private void updateUI() {
+        balanceTextView.setText(String.format("Balance: $%.2f", totalBalance));
+        spendingTextView.setText(String.format("Spending: $%.2f", totalSpending));
+
+        setupPieChart();
+    }
+}
