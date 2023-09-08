@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:icon="@drawable/ic_baseline_filter_alt_24">
+
+    <item
+        android:id="@+id/timeRangeOption"
+        android:title="Select time range"
+        app:showAsAction="never">
+
+        <menu>
+            <item
+                android:id="@+id/DayOption"
+                android:title="Today" />
+            <item
+                android:id="@+id/WeekOption"
+                android:title="Week" />
+            <item
+                android:id="@+id/MonthOption"
+                android:title="Month" />
+            <item
+                android:id="@+id/CustomOption"
+                android:title="Custom time range" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/CategoryOption"
+        android:title="Category">
+
+        <menu>
+            <item
+                android:id="@+id/AllOption"
+                android:title="All" />
+            <item
+                android:id="@+id/FNBOption"
+                android:title="Food &amp; Beverage" />
+            <item
+                android:id="@+id/TransportOption"
+                android:title="Transportation" />
+            <item
+                android:id="@+id/RentalsOption"
+                android:title="Rentals" />
+            <item
+                android:id="@+id/BillOption"
+                android:title="Bills" />
+            <item
+                android:id="@+id/MedicalOption"
+                android:title="Medicals" />
+            <item
+                android:id="@+id/FunNRelaxOption"
+                android:title="Fun &amp; Relax" />
+            <item
+                android:id="@+id/CashInOption"
+                android:title="Cash in" />
+        </menu>
+
+    </item>
+
+</menu>
