@@ -8,9 +8,6 @@ public class Milestone {
         this.milestoneReached = false;
     }
 
-
-
-
     public void setTargetAmount(double targetAmount) {
         this.targetAmount = targetAmount;
         this.milestoneReached = false;
