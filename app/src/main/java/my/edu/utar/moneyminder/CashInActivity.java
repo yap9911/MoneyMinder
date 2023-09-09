@@ -37,14 +37,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class CashInActivity extends AppCompatActivity {
 
@@ -105,7 +97,7 @@ public class CashInActivity extends AppCompatActivity {
                     validAmount = true;     // amount is a valid input
                 }
 
-                if (validAmount){
+                if (validAmount) {
 
                     double currentBalance = getCurrentBalance();
                     double updatedBalance = currentBalance + amount;
@@ -269,7 +261,7 @@ public class CashInActivity extends AppCompatActivity {
 
 
     // Method to return to Main Activity
-    public void openMainActivity(){
+    public void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

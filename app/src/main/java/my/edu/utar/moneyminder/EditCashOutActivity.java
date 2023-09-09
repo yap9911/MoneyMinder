@@ -39,7 +39,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import my.edu.utar.moneyminder.ui.transaction.Transaction;
-import my.edu.utar.moneyminder.ui.transaction.TransactionFragment;
 
 public class EditCashOutActivity extends AppCompatActivity {
 

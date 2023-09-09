@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
 import org.checkerframework.checker.nullness.qual.NonNull;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -20,7 +20,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 import my.edu.utar.moneyminder.R;
 import my.edu.utar.moneyminder.databinding.FragmentVirtualAdvisorBinding;

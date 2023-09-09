@@ -1,6 +1,5 @@
 package my.edu.utar.moneyminder.ui.transaction;
 
-import java.io.Serializable;
 
 // model class
 
